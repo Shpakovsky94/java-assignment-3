@@ -5,11 +5,6 @@
         <strong>{{currentUser.username}}</strong> Profile
       </h3>
     </header>
-
-    <p>
-      <strong>Id:</strong>
-      {{currentUser.id}}
-    </p>
     <p>
       <strong>Email:</strong>
       {{currentUser.email}}
@@ -24,13 +19,8 @@
     </p>
     <p>
       <strong>Birthday:</strong>
-      {{currentUser.bithday}}
+      {{currentUser.birthday}}
     </p>
-    
-    <strong>Authorities:</strong>
-    <ul>
-      <li v-for="(role,index) in currentUser.roles" :key="index">{{role}}</li>
-    </ul>
 
      <div class="form-group">
           <button class="btn btn-primary btn-block edit-btn" @click.prevent="redirectToEditForm">

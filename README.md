@@ -47,7 +47,14 @@ cd 03-frontend
 Then type the following command to install the dependencies and start the application -
 
 ```bash
-npm install && npm start
+npm install -g @vue/cli
+npm install && npm run serve
 ```
 
 The front-end server will start on port `8081`.
+
+5. **Default User**
+
+	There is automatically created default user 
+	username= "useruser" password = "useruser",
+	 or you can create your own user.
