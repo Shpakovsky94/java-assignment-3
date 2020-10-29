@@ -1,6 +1,8 @@
-use loginapp;
+drop database if exists loginApp;
+create database loginApp;
+use loginApp;
 
-create table if not exists `LOGINAPP`.`APPUSERS`
+create table if not exists `LOGINAPP`.`USERS`
 (
     id         bigint auto_increment
         primary key,
