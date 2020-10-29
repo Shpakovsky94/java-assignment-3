@@ -1,0 +1,23 @@
+
+g
+java:S1301g"KReplace this "switch" statement by "if" statements to increase readability.(¶„æ8§ÑùØÕ.
+C
+java:S14522"&Remove usage of generic wildcard type.(—­è€8Ã˜€ØÕ.
+C
+java:S1452"&Remove usage of generic wildcard type.(äÂ©Õ8È§‹„×.
+I
+java:S1612<",Replace this lambda with a method reference.(¡©é½8»ñ•ÚÕ.
+X
+java:S3655":Call "currentUser.isPresent()" before accessing the value.(•ŸĞ8È§‹„×.
+H
+java:S5411†"*Use the primitive boolean expression here.(±ŠêÜ8È§‹„×.
+G
+java:S5411M"*Use the primitive boolean expression here.(ŠËµÁ8È§‹„×.
+C
+java:S1452L"&Remove usage of generic wildcard type.(Ñ°¶”8Ã˜€ØÕ.
+|
+java:S1192c"ZDefine a constant instead of duplicating this literal "Error: Role is not found." 3 times.(ÉÿÊ–ùÿÿÿÿ8Ã˜€ØÕ.
+G
+java:S5411S"*Use the primitive boolean expression here.(È·¨Š8È§‹„×.
+M
+java:S5411€"*Use the primitive boolean expression here.(¹èåÀøÿÿÿÿ8È§‹„×.
