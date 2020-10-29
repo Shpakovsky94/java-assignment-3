@@ -46,6 +46,7 @@ public class AuthController {
     @Autowired
     JwtUtils jwtUtils;
 
+    // Login with existing credentials
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
@@ -69,17 +70,21 @@ public class AuthController {
                 userDetails.getFirstName(),
                 userDetails.getLastName(),
                 userDetails.getBirthday()
-                ));
+        ));
     }
 
+    // Register the user in Database
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequest registerRequest) {
+
+        // Check if the username is used
         if (userRepository.existsByUsername(registerRequest.getUsername())) {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Error: Username is already taken!"));
         }
 
+        // Check if the email is used
         if (userRepository.existsByEmail(registerRequest.getEmail())) {
             return ResponseEntity
                     .badRequest()
@@ -123,32 +128,61 @@ public class AuthController {
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
-    @PutMapping("/profile-edit")
-    public ResponseEntity<?> updateUserInfo(@Valid @RequestBody RegisterRequest updateUserRequest) {
-        if (userRepository.existsByUsername(updateUserRequest.getUsername())) {
+
+    // Update existing user account
+    @PutMapping("/profile-edit/{id}")
+    public ResponseEntity<?> updateUserInfo(@Valid @PathVariable("id") Long id, @RequestBody RegisterRequest updateUserRequest) {
+
+        // Create User Object based on the id number
+        Optional<User> userFromDB = userRepository.findById(id);
+
+        // Check if the user is present
+        if (userFromDB.isPresent()) {
+            User updatedUser = userFromDB.get();
+
+            // Check if the user new "username" is different from previous
+            if (updatedUser.getUsername().equals(updateUserRequest.getUsername())) {
+                return ResponseEntity
+                        .badRequest()
+                        .body(new MessageResponse("Error: Used an old username, try another one, please!"));
+            }
+
+            // Check if the user new "email" is different from previous
+            if (updatedUser.getEmail().equals(updateUserRequest.getEmail())) {
+                return ResponseEntity
+                        .badRequest()
+                        .body(new MessageResponse("Error: Used an old email, try another one, please!"));
+            }
+
+            // Check if the username is used
+            if (userRepository.existsByUsername(updateUserRequest.getUsername())) {
+                return ResponseEntity
+                        .badRequest()
+                        .body(new MessageResponse("Error: Username is already taken!"));
+            }
+
+            // Check if the email is used
+            if (userRepository.existsByEmail(updateUserRequest.getEmail())) {
+                return ResponseEntity
+                        .badRequest()
+                        .body(new MessageResponse("Error: Email is already in use!"));
+            }
+
+            // Get current user from DB
+            userFromDB.get().setUsername(updateUserRequest.getUsername());
+            userFromDB.get().setEmail(updateUserRequest.getEmail());
+            userFromDB.get().setPassword(encoder.encode(updateUserRequest.getPassword()));
+            userFromDB.get().setFirstName(updateUserRequest.getFirstName());
+            userFromDB.get().setLastName(updateUserRequest.getLastName());
+            userFromDB.get().setBirthday(updateUserRequest.getBirthday());
+
+            userRepository.save(updatedUser);
+
+            return ResponseEntity.ok(new MessageResponse("User information is updated successfully!"));
+        } else {
             return ResponseEntity
                     .badRequest()
-                    .body(new MessageResponse("Error: Username is already taken!"));
+                    .body(new MessageResponse("Error: User is not found"));
         }
-
-        if (userRepository.existsByEmail(updateUserRequest.getEmail())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Error: Email is already in use!"));
-        }
-
-        // Get current user from DB
-         Optional<User> currentUser = userRepository.findById(updateUserRequest.getId());
-
-         currentUser.get().setUsername(updateUserRequest.getUsername());
-         currentUser.get().setEmail(updateUserRequest.getEmail());
-         currentUser.get().setPassword(encoder.encode(updateUserRequest.getPassword()));
-         currentUser.get().setFirstName(updateUserRequest.getFirstName());
-         currentUser.get().setLastName(updateUserRequest.getLastName());
-         currentUser.get().setBirthday(updateUserRequest.getBirthday());
-
-        userRepository.save(currentUser.get());
-
-        return ResponseEntity.ok(new MessageResponse("User information is updated successfully!"));
     }
 }
