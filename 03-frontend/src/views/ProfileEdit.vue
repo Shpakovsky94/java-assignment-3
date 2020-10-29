@@ -22,7 +22,7 @@
       </div>
 
       <div class="form-group">
-        <label for="firtName">First name</label>
+        <label for="firstName">First name</label>
         <input
           v-model="currentUser.firstName"
           v-validate="'max:50'"
@@ -80,7 +80,7 @@
         <label for="password">Password</label>
         <input
           v-model="currentUser.password"
-          v-validate="'required|min:6|max:40'"
+          v-validate="'min:6|max:40'"
           type="password"
           class="form-control"
           name="password"

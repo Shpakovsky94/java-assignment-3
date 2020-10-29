@@ -26,18 +26,18 @@
 
 
           <div class="form-group">
-            <label for="firtName">First name</label>
+            <label for="firstName">First name</label>
             <input
-              v-model="user.firtName"
+              v-model="user.firstName"
               v-validate="'required|max:50'"
               type="text"
               class="form-control"
               name="firstName"
             />
             <div
-              v-if="submitted && errors.has('firtName')"
+              v-if="submitted && errors.has('firstName')"
               class="alert-danger"
-            >{{errors.first('firtName')}}</div>
+            >{{errors.first('firstName')}}</div>
           </div>
 
 
