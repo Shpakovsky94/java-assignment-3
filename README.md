@@ -47,7 +47,7 @@ cd 03-frontend
 Then type the following command to install the dependencies and start the application -
 
 ```bash
-npm install && npm start
+npm install && npm serve
 ```
 
 The front-end server will start on port `8081`.
